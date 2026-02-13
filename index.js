@@ -51,9 +51,20 @@ app.use(
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"]
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+    exposedHeaders: ["Set-Cookie"]
   })
 );
+
+
+// Health Check Route
+app.get("/api/", (req, res) => {
+  res.json({ 
+    status: "OK", 
+    message: "Learnify Backend is running",
+    timestamp: new Date().toISOString()
+  });
+});
 
 // ================= ROUTES =================
 
