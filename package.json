@@ -9,7 +9,11 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "create-admin": "node scripts/createAdmin.js"
+    "create-admin": "node scripts/createAdmin.js",
+    "approve-users": "node scripts/approveUsers.js",
+    "debug-auth": "node scripts/debugAuth.js",
+    "reset-password": "node scripts/resetPassword.js",
+    "test-login": "node scripts/testLogin.js"
   },
   "dependencies": {
     "@google/genai": "^1.10.0",
