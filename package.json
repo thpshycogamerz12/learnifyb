@@ -21,7 +21,9 @@
     "debug-deployed": "node scripts/debugDeployed.js",
     "fix-deploy": "node scripts/createDeployFixes.js",
     "fix-all-errors": "node scripts/fixAllErrors.js",
-    "handle-blank-data": "node scripts/createEmptyDataHandler.js"
+    "handle-blank-data": "node scripts/createEmptyDataHandler.js",
+    "fix-assignments": "node scripts/fixAssignmentRoutes.js",
+    "add-assignment-routes": "node scripts/addMissingAssignmentRoutes.js"
   },
   "dependencies": {
     "@google/genai": "^1.10.0",
