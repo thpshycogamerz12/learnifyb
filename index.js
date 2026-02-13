@@ -40,8 +40,7 @@ app.use(
   cors({
     origin: (origin, callback) => {
       const allowedOrigins = [
-        "http://localhost:5173",
-        "http://localhost:5193"
+        "https://learnifyLetf.onrender.com"
       ];
 
       if (!origin || allowedOrigins.includes(origin)) {

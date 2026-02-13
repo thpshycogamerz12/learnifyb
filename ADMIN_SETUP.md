@@ -7,7 +7,7 @@ There are **two ways** to create an admin account:
 Make a POST request to create the first admin (only works if no admin exists):
 
 ```bash
-POST http://localhost:8000/api/setup/create-first-admin
+POST https://learnifyb.onrender.com/api/setup/create-first-admin
 Content-Type: application/json
 
 {
@@ -19,7 +19,7 @@ Content-Type: application/json
 
 **Or use curl:**
 ```bash
-curl -X POST http://localhost:8000/api/setup/create-first-admin \
+curl -X POST https://learnifyb.onrender.com/api/setup/create-first-admin \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Admin User",
