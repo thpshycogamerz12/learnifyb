@@ -17,7 +17,10 @@
     "test-auth": "node scripts/testAuthFlow.js",
     "fix-cookies": "node scripts/fixCookieSettings.js",
     "debug-all": "node scripts/comprehensiveDebug.js",
-    "fix-all": "node scripts/fixAllIssues.js"
+    "fix-all": "node scripts/fixAllIssues.js",
+    "debug-deployed": "node scripts/debugDeployed.js",
+    "fix-deploy": "node scripts/createDeployFixes.js",
+    "fix-all-errors": "node scripts/fixAllErrors.js"
   },
   "dependencies": {
     "@google/genai": "^1.10.0",
