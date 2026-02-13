@@ -40,7 +40,7 @@ app.use(
   cors({
     origin: (origin, callback) => {
       const allowedOrigins = [
-        "https://learnifyLetf.onrender.com"
+        "https://learnifyf.onrender.com"
       ];
 
       if (!origin || allowedOrigins.includes(origin)) {
