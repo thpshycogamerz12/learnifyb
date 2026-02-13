@@ -20,7 +20,8 @@
     "fix-all": "node scripts/fixAllIssues.js",
     "debug-deployed": "node scripts/debugDeployed.js",
     "fix-deploy": "node scripts/createDeployFixes.js",
-    "fix-all-errors": "node scripts/fixAllErrors.js"
+    "fix-all-errors": "node scripts/fixAllErrors.js",
+    "handle-blank-data": "node scripts/createEmptyDataHandler.js"
   },
   "dependencies": {
     "@google/genai": "^1.10.0",
