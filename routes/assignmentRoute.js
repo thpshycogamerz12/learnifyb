@@ -1,6 +1,7 @@
 import express from "express";
 import isAuth from "../middlewares/isAuth.js";
 import upload from "../middlewares/multer.js";
+import Assignment from "../models/assignmentModel.js";
 import {
   createAssignment,
   getAssignmentsByCourse,
@@ -16,28 +17,9 @@ const router = express.Router();
 
 router.use(isAuth);
 
-// Educator manages assignments
-router.post("/", upload.single("attachment"), createAssignment);
-router.patch("/:assignmentId", updateAssignment);
-router.delete("/:assignmentId", deleteAssignment);
-
-// List assignments for a course (students + educators)
-router.get("/:courseId", getAssignmentsByCourse);
-
-// Student submission
-router.post("/:assignmentId/submit", upload.single("attachment"), submitAssignment);
-router.get("/:assignmentId/my", getMySubmission);
-
-// Educator views submissions and grades
-router.get("/:assignmentId/submissions", getSubmissionsForAssignment);
-router.post("/submissions/:submissionId/grade", gradeSubmission);
-
-
 // Get all assignments for logged-in user (both educator and student)
-router.get("/my", isAuth, async (req, res) => {
+router.get("/my", async (req, res) => {
   try {
-    const Assignment = require("../models/assignmentModel.js").default;
-    
     const assignments = await Assignment.find({ 
       $or: [
         { educatorId: req.userId },
@@ -63,10 +45,25 @@ router.get("/my", isAuth, async (req, res) => {
   }
 });
 
+// Educator manages assignments
+router.post("/", upload.single("attachment"), createAssignment);
+router.patch("/:assignmentId", updateAssignment);
+router.delete("/:assignmentId", deleteAssignment);
+
+// List assignments for a course (students + educators)
+router.get("/:courseId", getAssignmentsByCourse);
+
+// Student submission
+router.post("/:assignmentId/submit", upload.single("attachment"), submitAssignment);
+router.get("/:assignmentId/my", getMySubmission);
+
+// Educator views submissions and grades
+router.get("/:assignmentId/submissions", getSubmissionsForAssignment);
+router.post("/submissions/:submissionId/grade", gradeSubmission);
+
 // Get assignment by ID (fix for frontend calls)
-router.get("/assignments/:assignmentId", isAuth, async (req, res) => {
+router.get("/assignments/:assignmentId", async (req, res) => {
   try {
-    const Assignment = require("../models/assignmentModel.js").default;
     const { assignmentId } = req.params;
     
     const assignment = await Assignment.findById(assignmentId)

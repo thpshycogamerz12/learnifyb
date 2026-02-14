@@ -1,9 +1,13 @@
 import express from "express";
 import dotenv from "dotenv";
 import { GoogleGenAI } from "@google/genai";
+import { searchWithAi } from "../controllers/aiController.js";
 dotenv.config();
 
 const router = express.Router();
+
+// ================= AI SEARCH ROUTE ================= //
+router.post("/search", searchWithAi);
 
 // ================= AI QUIZ ROUTE ================= //
 router.post("/generate-quiz", async (req, res) => {

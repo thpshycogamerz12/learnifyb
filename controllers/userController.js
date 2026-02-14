@@ -7,6 +7,10 @@ import Attendance from "../models/attendanceModel.js";
 /* ========================= Get Current User ========================= */
 export const getCurrentUser = async (req, res) => {
   try {
+    if (!req.userId) {
+      return res.status(200).json(null);
+    }
+
     const user = await User.findById(req.userId)
       .select("-password");
 

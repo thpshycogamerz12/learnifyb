@@ -6,6 +6,19 @@ import User from "../models/userModel.js"
 
 import sendMail from "../configs/Mail.js"
 
+const isProd = process.env.NODE_ENV === "production";
+const cookieOptions = {
+    httpOnly: true,
+    secure: isProd,
+    sameSite: isProd ? "None" : "Lax",
+    maxAge: 7 * 24 * 60 * 60 * 1000
+};
+const clearCookieOptions = {
+    httpOnly: true,
+    secure: isProd,
+    sameSite: isProd ? "None" : "Lax"
+};
+
 
 export const signUp=async (req,res)=>{
  
@@ -33,12 +46,7 @@ export const signUp=async (req,res)=>{
             createdByAdmin:false
             })
         let token = await genToken(user._id)
-        res.cookie("token",token,{
-            httpOnly:true,
-            secure:true,
-            sameSite: "None",
-            maxAge: 7 * 24 * 60 * 60 * 1000
-        })
+        res.cookie("token", token, cookieOptions)
         return res.status(201).json(user)
 
     } catch (error) {
@@ -67,12 +75,7 @@ export const login=async(req,res)=>{
         user.lastLoginAt = new Date();
         await user.save();
         let token =await genToken(user._id)
-        res.cookie("token",token,{
-            httpOnly:true,
-            secure:true,
-            sameSite: "None",
-            maxAge: 7 * 24 * 60 * 60 * 1000
-        })
+        res.cookie("token", token, cookieOptions)
         return res.status(200).json(user)
 
     } catch (error) {
@@ -86,7 +89,7 @@ export const login=async(req,res)=>{
 
 export const logOut = async(req,res)=>{
     try {
-        await res.clearCookie("token")
+        await res.clearCookie("token", clearCookieOptions)
         return res.status(200).json({message:"logOut Successfully"})
     } catch (error) {
         return res.status(500).json({message:`logout Error ${error}`})
@@ -136,12 +139,7 @@ export const googleSignup = async (req,res) => {
         }
         
         let token = await genToken(user._id)
-        res.cookie("token",token,{
-            httpOnly:true,
-            secure:true,
-            sameSite: "None",
-            maxAge: 7 * 24 * 60 * 60 * 1000
-        })
+        res.cookie("token", token, cookieOptions)
         
         // Return user without password
         const userResponse = user.toObject()

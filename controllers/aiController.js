@@ -13,8 +13,9 @@ export const searchWithAi = async (req,res) => {
       return res.status(400).json({ message: "Search query is required" });
     }
  // case-insensitive
-    const ai = new GoogleGenAI({});
-const prompt=`You are an intelligent assistant for an LMS platform. A user will type any query about what they want to learn. Your task is to understand the intent and return one **most relevant keyword** from the following list of course categories and levels:
+    let keyword = input;
+    const apiKey = process.env.GEMINI_API_KEY;
+    const prompt=`You are an intelligent assistant for an LMS platform. A user will type any query about what they want to learn. Your task is to understand the intent and return one **most relevant keyword** from the following list of course categories and levels:
 
 - App Development  
 - AI/ML  
@@ -34,11 +35,21 @@ Only reply with one single keyword from the list above that best matches the que
 Query: ${input}
 `
 
-  const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
-    contents:prompt,
-  });
-  const keyword=response.text
+    if (apiKey) {
+      try {
+        const ai = new GoogleGenAI({ apiKey });
+        const response = await ai.models.generateContent({
+          model: "gemini-2.5-flash",
+          contents: prompt,
+        });
+        const aiText = response?.text?.trim();
+        if (aiText) {
+          keyword = aiText;
+        }
+      } catch (aiError) {
+        console.warn("AI keyword generation failed:", aiError?.message || aiError);
+      }
+    }
 
 
 
@@ -71,6 +82,7 @@ Query: ${input}
 
 
     } catch (error) {
-        console.log(error)
+        console.error("AI search error:", error);
+        return res.status(500).json({ message: "AI search failed", error: error.message });
     }
 }

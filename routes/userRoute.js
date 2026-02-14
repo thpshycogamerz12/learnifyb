@@ -1,5 +1,6 @@
 import express from "express";
 import isAuth from "../middlewares/isAuth.js";
+import optionalAuth from "../middlewares/optionalAuth.js";
 import upload from "../middlewares/multer.js";
 
 import { 
@@ -14,8 +15,8 @@ import {
 
 let userRouter = express.Router();
 
-// Get logged in user
-userRouter.get("/currentuser", isAuth, getCurrentUser);
+// Get logged in user (optional auth to avoid 401 noise)
+userRouter.get("/currentuser", optionalAuth, getCurrentUser);
 
 // Update profile
 userRouter.post("/updateprofile", isAuth, upload.single("photoUrl"), UpdateProfile);

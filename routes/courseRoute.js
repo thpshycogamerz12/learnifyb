@@ -62,4 +62,7 @@ courseRouter.post("/getcreator", isAuth, getCreatorById);
 // ⭐ Enroll Course
 courseRouter.post("/enroll/:courseId", isAuth, enrollCourse);
 
+// Alias: single course by id (for older frontend calls)
+courseRouter.get("/:courseId", isAuth, getCourseById);
+
 export default courseRouter;
