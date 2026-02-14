@@ -163,7 +163,9 @@ export const getMySubmission = async (req, res) => {
       studentId: req.userId,
     });
 
-    if (!submission) return res.status(404).json({ message: "No submission found" });
+    if (!submission) {
+      return res.status(200).json(null);
+    }
     return res.status(200).json(submission);
   } catch (error) {
     return res.status(500).json({ message: `Fetch submission failed: ${error}` });
